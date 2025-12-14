@@ -21,7 +21,7 @@ const TopSellers = () => {
   // Fetch all books
   const { data: books = [] } = useFetchAllBooksQuery();
 
-  console.log("BOOKS FROM BACKEND:", books);
+
 
 
   // Filter books based on category

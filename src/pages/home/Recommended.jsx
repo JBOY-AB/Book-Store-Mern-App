@@ -11,7 +11,7 @@ const Recommended = () => {
     const { data } = useFetchAllBooksQuery();
     const books = Array.isArray(data?.books) ? data.books : Array.isArray(data) ? data : [];
 
-    console.log("Books from backend:", books); // check what you actually get
+     // check what you actually get
 
     if (!books.length) return null; // optional: don't render anything if no books
 
