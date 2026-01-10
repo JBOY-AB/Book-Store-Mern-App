@@ -1,75 +1,68 @@
-import React, { useState } from 'react'
-import BookCard from '../books/BookCard';
-
-// Swiper
+'use client';
+import React, { useState } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Pagination, Navigation } from 'swiper/modules';
-
-// Styles
-import 'swiper/css'; 
+import 'swiper/css';
 import 'swiper/css/pagination';
 import 'swiper/css/navigation';
-
-// API
+import BookCard from '../books/BookCard';
 import { useFetchAllBooksQuery } from '../../redux/features/books/booksApi';
 
 const categories = ["Choose a genre", "Business", "Fiction", "Horror", "Adventure"];
 
 const TopSellers = () => {
   const [selectedCategory, setSelectedCategory] = useState("Choose a genre");
-
-  // Fetch all books
   const { data: books = [] } = useFetchAllBooksQuery();
 
+  console.log("Books fetched:", books);
 
-
-
-  // Filter books based on category
   const filteredBooks =
     selectedCategory === "Choose a genre"
       ? books
-      : books.filter((book) =>
-          book.category.toLowerCase() === selectedCategory.toLowerCase()
+      : books.filter(
+          (book) =>
+            book.category.toLowerCase() === selectedCategory.toLowerCase()
         );
 
   return (
     <div className="py-10">
-      <h2 className="text-3xl font-semibold mb-6">Top Sellers</h2>
+      <div className="max-w-7xl mx-auto px-4">
+        <h2 className="text-3xl font-semibold mb-6">Top Sellers</h2>
 
-      {/* Category Filter */}
-      <div className="mb-8 flex items-center">
-        <select
-          onChange={(e) => setSelectedCategory(e.target.value)}
-          className="border bg-[#EAEAEA] border-gray-300 rounded-md px-4 py-2 focus:outline-none"
-        >
-          {categories.map((category, index) => (
-            <option key={index} value={category}>
-              {category}
-            </option>
-          ))}
-        </select>
+        <div className="mb-8">
+          <select
+            onChange={(e) => setSelectedCategory(e.target.value)}
+            className="border bg-[#EAEAEA] border-gray-300 rounded-md px-4 py-2 focus:outline-none"
+          >
+            {categories.map((category, index) => (
+              <option key={index} value={category}>
+                {category}
+              </option>
+            ))}
+          </select>
+        </div>
+
+        {filteredBooks.length === 0 ? (
+          <p>No books found</p>
+        ) : (
+          <Swiper
+            spaceBetween={20}
+            navigation
+            breakpoints={{
+              0: { slidesPerView: 1 },
+              768: { slidesPerView: 2 },
+              1024: { slidesPerView: 3 },
+            }}
+            modules={[Pagination, Navigation]}
+          >
+            {filteredBooks.map((book) => (
+              <SwiperSlide key={book._id} className="flex justify-center">
+                <BookCard book={book} />
+              </SwiperSlide>
+            ))}
+          </Swiper>
+        )}
       </div>
-
-      {/* Swiper Slider */}
-      <Swiper
-        slidesPerView={1}
-        spaceBetween={30}
-        navigation={true}
-        breakpoints={{
-          640: { slidesPerView: 1, spaceBetween: 20 },
-          768: { slidesPerView: 2, spaceBetween: 40 },
-          1024: { slidesPerView: 2, spaceBetween: 50 },
-          1180: { slidesPerView: 3, spaceBetween: 50 },
-        }}
-        modules={[Pagination, Navigation]}
-        className="mySwiper"
-      >
-        {filteredBooks.map((book) => (
-          <SwiperSlide key={book._id}>
-            <BookCard book={book} />
-          </SwiperSlide>
-        ))}
-      </Swiper>
     </div>
   );
 };
