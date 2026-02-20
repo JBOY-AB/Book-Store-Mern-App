@@ -19,7 +19,7 @@ const Navbar = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const cartItems = useSelector((state) => state.cart.cartItems);
 
-  const { currentUser, isAdmin, logout } = useAuth();
+  const { currentUser, logout } = useAuth();
 
   const handleLogOut = () => {
     logout();
@@ -87,10 +87,6 @@ const Navbar = () => {
                   </div>
                 )}
               </>
-            ) : isAdmin ? (
-              <Link to="/dashboard" className="border-b-2 border-primary">
-                Dashboard
-              </Link>
             ) : (
               <Link to="/login">
                 <HiOutlineUser className="size-6" />

@@ -19,7 +19,7 @@ const ordersApi = createApi({
         }),
         getOrderByEmail: builder.query({
             query: (email) => ({
-                url: `/email/${email}`
+                url: `/email/${encodeURIComponent(email)}`
             }),
             providesTags: ['Orders']
         })

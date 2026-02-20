@@ -16,6 +16,11 @@ const firebaseConfig = {
   appId: import.meta.env.VITE_APPID
 };
 
+// Validate Firebase configuration
+if (!firebaseConfig.apiKey || firebaseConfig.apiKey === 'your-api-key-here') {
+  console.error('Firebase configuration error: Missing or invalid API key. Please check your .env file.');
+}
+
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);

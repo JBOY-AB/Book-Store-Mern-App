@@ -1,4 +1,3 @@
-'use client';
 import React, { useState } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Pagination, Navigation } from 'swiper/modules';
@@ -46,8 +45,10 @@ const TopSellers = () => {
           <p>No books found</p>
         ) : (
           <Swiper
-            spaceBetween={20}
-            navigation
+            spaceBetween={30}
+            navigation={true}
+            allowSlidePrev={true}
+            allowSlideNext={true}
             breakpoints={{
               0: { slidesPerView: 1 },
               768: { slidesPerView: 2 },
@@ -67,4 +68,6 @@ const TopSellers = () => {
   );
 };
 
-export default TopSellers;
+export default TopSellers;  
+
+

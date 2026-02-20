@@ -1,12 +1,13 @@
 import React, { useState } from 'react'
-import { Link, Navigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { FaGoogle } from "react-icons/fa";
 import { useForm } from "react-hook-form"
 import { useAuth } from '../context/AuthContext';
 
 const Register = () => {
     const [message, setMessage] = useState("");
-    const {registerUser, signInWithGoogle} = useAuth();
+    const navigate = useNavigate();
+    const {registerUser, signInWithGoogle, logout} = useAuth();
     // console.log(registerUser)
     const {
         register,
@@ -21,7 +22,9 @@ const Register = () => {
         console.log(data)
         try {
             await registerUser(data.email, data.password);
-            alert("User registered successfully!")
+            await logout(); // Sign out so user must log in explicitly
+            alert("User registered successfully! Please login to continue.")
+            navigate("/login");
         } catch (error) {
            setMessage("Please provide a valid email and password") 
            console.error(error)
@@ -32,7 +35,7 @@ const Register = () => {
         try {
             await signInWithGoogle();
             alert("Login successful!");
-            Navigate("/")
+            navigate("/")
         } catch (error) {
             alert("Google sign in failed!") 
             console.error(error)

@@ -56,6 +56,24 @@ export const AuthProvide = ({children}) => {
         return () => unsubscribe();
     }, [])
 
+    // Logout user when they leave the app
+    useEffect(() => {
+        const handleBeforeUnload = (e) => {
+            if (currentUser) {
+                // Logout when user closes tab/window or navigates away
+                logout();
+            }
+        };
+
+        // Add event listener for when user leaves the app
+        window.addEventListener('beforeunload', handleBeforeUnload);
+
+        // Cleanup
+        return () => {
+            window.removeEventListener('beforeunload', handleBeforeUnload);
+        };
+    }, [currentUser, logout])
+
 
     const value = {
         currentUser,

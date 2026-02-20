@@ -41,8 +41,8 @@ const CheckoutPage = () => {
     const handler = window.PaystackPop.setup({
       key: paystackKey,
       email: currentUser.email,
-      amount: Number(totalPrice) * 100, // Kobo
-      currency: "NGN",
+      amount: Number(totalPrice) * 100, // cents
+      currency: "USD",
 
       callback: function (response) {
         handlePaymentSuccess(response.reference);
@@ -111,7 +111,7 @@ const CheckoutPage = () => {
             Secure Online Payment
           </h2>
 
-          <p className="text-gray-500 mb-2">Total Price: ₦{totalPrice}</p>
+          <p className="text-gray-500 mb-2">Total Price: ${totalPrice}</p>
           <p className="text-gray-500 mb-6">Items: {cartItems.length}</p>
 
           <div className="bg-white rounded shadow-lg p-6">
@@ -135,11 +135,12 @@ const CheckoutPage = () => {
               />
 
               <input
-                {...register("city", { required: true })}
-                placeholder="City"
+                type="number"
+                {...register("amount", { required: true })}
+                placeholder="Amount"
                 className="border p-2 rounded"
               />
-
+{/* 
               <input
                 {...register("state", { required: true })}
                 placeholder="State"
@@ -156,7 +157,7 @@ const CheckoutPage = () => {
                 {...register("zipcode", { required: true })}
                 placeholder="Zip Code"
                 className="border p-2 rounded"
-              />
+              /> */}
 
               <div className="col-span-2">
                 <input

@@ -6,7 +6,10 @@
 
 @layer components {
   .swiper-button-next {
-    @apply bg-white p-5 rounded-full z-50 shadow-md;
+    @apply bg-white rounded-full z-50 shadow-md;
+    width: 80px !important;
+    height: 80px !important;
+    padding: 0 !important;
   }
 
   .btn-primary {
@@ -35,12 +38,16 @@
 }
 
 .swiper-button-prev {
-  display: none !important;
+  @apply bg-white rounded-full z-50 shadow-md;
+  width: 80px !important;
+  height: 80px !important;
+  padding: 0 !important;
 }
 
 .swiper-button-prev:after,
 .swiper-button-next:after {
-  font-size: 16px !important;
+  font-size: 32px !important;
+  font-weight: bold !important;
 }
 
 .html {
